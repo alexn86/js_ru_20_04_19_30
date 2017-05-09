@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Comment from './Comment';
 
 export default class CommentList extends Component {
@@ -19,7 +19,7 @@ export default class CommentList extends Component {
     };
 
     render() {
-        const elements = this.props.comments.map(comment =>
+        const elements = !this.props.comments ? [] : this.props.comments.map(comment =>
             <li key={comment.id}>
                 <Comment comment={comment}/>
             </li>
