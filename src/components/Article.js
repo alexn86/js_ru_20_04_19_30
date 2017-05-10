@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import CommnetList from './CommentList'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import CommnetList from './CommentList';
+import PropTypes from 'prop-types';
 
 class Article extends Component {
     static propTypes = {
@@ -12,7 +12,7 @@ class Article extends Component {
         //from toggleOpen decorator
         isOpen: PropTypes.bool,
         toggleOpen: PropTypes.func
-    }
+    };
 
 /*
     componentWillMount() {
@@ -20,15 +20,16 @@ class Article extends Component {
     }
 */
     shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.isOpen != this.props.isOpen
+        return nextProps.isOpen != this.props.isOpen;
     }
 
     componentWillUpdate() {
-        console.log('---', 'updating')
+        console.log('---', 'updating');
     }
 
     render() {
-        const {article, toggleOpen} = this.props
+        const {article, toggleOpen} = this.props;
+
         return (
             <section>
                 <h2 onClick={toggleOpen}>
@@ -36,7 +37,7 @@ class Article extends Component {
                 </h2>
                 {this.getBody()}
             </section>
-        )
+        );
     }
 
     getBody() {
@@ -45,8 +46,8 @@ class Article extends Component {
                 {this.props.article.text}
                 <CommnetList comments={this.props.article.comments}/>
             </div>
-        )
+        );
     }
 }
 
-export default Article
+export default Article;
