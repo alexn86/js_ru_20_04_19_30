@@ -1,20 +1,20 @@
 import React, { Component as BasicComponent } from 'react';
 
 //DecoratedComponent я называл чтоб легче понять было. Лучше выбирай более значущее название
-export default (OriginalComponent) => class DecoratedComponent extends BasicComponent {
+export default (Component) => class Accordeon extends BasicComponent {
     state = {
         //Не привязывайся к названиям сущностей, вся суть декораторов в универсальности. Сделай openItemId
-        openArticleId: null
+        openItemId: null
     };
 
     render() {
-        return <OriginalComponent {...this.props} {...this.state} toggleArticle={this.toggleArticle}/>
+        return <Component {...this.props} {...this.state} toggleItem={this.toggleItem}/>
     }
 
-    toggleArticle = id => ev => {
+    toggleItem = id => ev => {
         ev && ev.preventDefault && ev.preventDefault();
         this.setState({
-            openArticleId: id != this.state.openArticleId ? id : null
+            openItemId: id != this.state.openItemId ? id : null
         })
     }
 }

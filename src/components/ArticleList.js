@@ -1,14 +1,14 @@
 import React from 'react'
 import Article from './Article'
 import PropTypes from 'prop-types'
-import toggleArticle from './../decorators/toggleArticle';
+import accordeon from './../decorators/accordeon';
 
 function ArticleList(props) {
-    const { openArticleId, toggleArticle } = props;
+    const { openItemId, toggleItem } = props;
     const elements = props.articles.map(article => <li key={article.id}>
         <Article article={article}
-                 isOpen={article.id == openArticleId}
-                 toggleOpen={toggleArticle(article.id)}/>
+                 isOpen={article.id == openItemId}
+                 toggleOpen={toggleItem(article.id)}/>
     </li>);
 
     return (
@@ -20,9 +20,9 @@ function ArticleList(props) {
 
 ArticleList.propTypes = {
     articles: PropTypes.array,
-    //from toggleArticle decorator
-    openArticleId: PropTypes.string,
-    toggleArticle: PropTypes.func
+    //from accordeon decorator
+    openItemId: PropTypes.string,
+    toggleItem: PropTypes.func
 };
 
-export default toggleArticle(ArticleList);
+export default accordeon(ArticleList);
