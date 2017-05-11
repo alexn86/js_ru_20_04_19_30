@@ -19,7 +19,10 @@ function ArticleList(props) {
 }
 
 ArticleList.propTypes = {
-    articles: PropTypes.array
+    articles: PropTypes.array,
+    //from toggleArticle decorator
+    openArticleId: PropTypes.string,
+    toggleArticle: PropTypes.func
 };
 
 export default toggleArticle(ArticleList);
