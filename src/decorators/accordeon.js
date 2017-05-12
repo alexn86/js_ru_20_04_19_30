@@ -1,7 +1,7 @@
-import React, { Component as BasicComponent } from 'react';
+import React from 'react';
 
 //DecoratedComponent я называл чтоб легче понять было. Лучше выбирай более значущее название
-export default (Component) => class AccordeonDecorator extends BasicComponent {
+export default (Component) => class AccordeonDecorator extends React.Component {
     state = {
         //Не привязывайся к названиям сущностей, вся суть декораторов в универсальности. Сделай openItemId
         openItemId: null
