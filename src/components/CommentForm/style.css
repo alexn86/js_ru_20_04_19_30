@@ -1,0 +1,47 @@
+.comment-form label {
+    display: block;
+}
+
+.comment-form input, .comment-form textarea {
+    padding: 10px;
+    border: solid 1px #E5E5E5;
+    outline: 0;
+    width: 200px;
+    background: #FFFFFF;
+    margin-bottom: 10px;
+}
+
+.comment-form input {
+    margin-right: 10px;
+}
+
+.comment-form textarea {
+    width: 400px;
+    max-width: 400px;
+    height: 150px;
+    line-height: 150%;
+    display: block;
+}
+
+.comment-form input:hover, .comment-form textarea:hover,
+.comment-form input:focus, .comment-form textarea:focus {
+    border-color: #C9C9C9;
+}
+
+.comment-form label {
+    color: #999999;
+}
+
+.comment-form input[type='submit'] {
+    width: auto;
+    padding: 9px 15px;
+    background: #617798;
+    border: 0;
+    font-size: 14px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.comment-form input.error, .comment-form textarea.error {
+    border-color: red;
+}
