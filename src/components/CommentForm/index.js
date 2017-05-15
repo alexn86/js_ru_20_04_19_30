@@ -9,33 +9,33 @@ export default class CommentForm extends Component {
 
     state = {
         user: '',
-        text: ''
+        text: '',
+        errorUser: false,
+        errorText: false
     };
 
     _userChange = (ev) => {
         const user = ev.target.value;
+        let errorUser = false;
 
         if (user.length < 20) {
             if (user.length < 5) {
-                ev.target.classList.add('error');
-            } else {
-                ev.target.classList.remove('error');
+                errorUser = true;
             }
 
-            this.setState({ user });
+            this.setState({ user, errorUser });
         }
     };
 
     _textChange = (ev) => {
-        if (ev.target.value.length == 0) {
-            ev.target.classList.add('error');
-        } else {
-            ev.target.classList.remove('error');
+        const text = ev.target.value;
+        let errorText = false;
+
+        if (text.length == 0) {
+            errorText = true;
         }
 
-        this.setState({
-            text: ev.target.value
-        });
+        this.setState({ text, errorText });
     };
 
     _validate = () => {
@@ -61,10 +61,21 @@ export default class CommentForm extends Component {
             <div className="comment-form">
                 <form onSubmit={this._formSubmit}>
                     <label>
-                        <input type="text" name="user" value={this.state.user} onChange={this._userChange}/>
+                        <input
+                            type="text"
+                            name="user"
+                            value={this.state.user}
+                            onChange={this._userChange}
+                            className={this.state.errorUser ? 'error' : ''}
+                        />
                         User
                     </label>
-                    <textarea name="text" onChange={this._textChange} value={this.state.text} />
+                    <textarea
+                        name="text"
+                        onChange={this._textChange}
+                        value={this.state.text}
+                        className={this.state.errorText ? 'error' : ''}
+                    />
                     <input type="submit" value="Send"/>
                 </form>
             </div>
