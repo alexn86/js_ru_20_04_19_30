@@ -3,6 +3,7 @@ import {findDOMNode} from 'react-dom'
 import Article from './Article/index'
 import PropTypes from 'prop-types'
 import accordion from '../decorators/accordion'
+import {connect} from 'react-redux'
 
 class ArticleList extends Component {
     componentDidMount() {
@@ -40,4 +41,6 @@ ArticleList.propTypes = {
     isItemOpened: PropTypes.func.isRequired
 }
 
-export default accordion(ArticleList)
+export default connect((state) => ({
+   articles: state.articles
+}))(accordion(ArticleList))

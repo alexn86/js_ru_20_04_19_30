@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import ArticleList from './ArticleList'
 import Chart from './Chart'
 import UserForm from './UserForm'
-import Select from 'react-select'
-import 'react-select/dist/react-select.css'
+import Filters from './Filters/index'
+import Counter from './Counter'
 
 class App extends Component {
     static propTypes = {
-
+        articles: PropTypes.array
     };
 
     state = {
-        counter: 0,
-        selection: null
+        counter: 0
     }
 
     updateCounter = (ev) => {
@@ -23,26 +23,17 @@ class App extends Component {
     }
 
     render() {
-        const options = this.props.articles.map(article => ({
-            label: article.title,
-            value: article.id
-        }))
-
         return (
             <div>
+                <Counter />
                 <UserForm />
+                <Filters articles = {this.props.articles} />
                 <a href = "#" onClick = {this.updateCounter}>update chart</a>
-                <Select options = {options} value = {this.state.selection}
-                        onChange = {this.handleSelectionChange}
-                        multi = {true}
-                />
                 <ArticleList articles = {this.props.articles} />
                 <Chart articles = {this.props.articles} key={this.state.counter}/>
             </div>
         )
     }
-
-    handleSelectionChange = selection => this.setState({ selection })
 }
 
 export default App
