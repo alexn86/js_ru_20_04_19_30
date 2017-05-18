@@ -8,6 +8,7 @@ export default (articles = defaultArticles, action) => {
         case DELETE_ARTICLE:
             return articles.filter(article => article.id !== payload.id);
         case FILTER_CHANGED:
+            //по сути ты удаляешь статьи, а должен хранить здесь список всех статей, а фильтровать где-то в другом месте(например в коннекте)
             const selection = payload.selection || payload.filters.selection;
             const date = payload.date ||  payload.filters.date;
 
