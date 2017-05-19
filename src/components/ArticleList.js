@@ -4,6 +4,7 @@ import Article from './Article/index'
 import PropTypes from 'prop-types'
 import accordion from '../decorators/accordion'
 import {connect} from 'react-redux'
+import {filteredArticlesSelector} from '../selectors'
 
 class ArticleList extends Component {
     componentDidMount() {
@@ -14,6 +15,7 @@ class ArticleList extends Component {
 
     render() {
         const {articles, toggleOpenItem, isItemOpened} = this.props
+        console.log('---', 'rerendering ArticleList')
 
         const elements = articles.map(article => <li key={article.id}>
             <Article article = {article}
@@ -42,5 +44,5 @@ ArticleList.propTypes = {
 }
 
 export default connect((state) => ({
-   articles: state.articles
+    articles: filteredArticlesSelector(state)
 }))(accordion(ArticleList))
