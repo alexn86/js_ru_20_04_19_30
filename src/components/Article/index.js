@@ -5,6 +5,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import './style.css'
 import {connect} from 'react-redux'
 import {deleteArticle} from '../../AC/index'
+import { articleSelectorFactory } from '../../selectors'
 
 class Article extends Component {
     static propTypes = {
@@ -60,10 +61,21 @@ class Article extends Component {
         return this.props.isOpen && (
             <div>
                 {this.props.article.text}
-                <CommnetList comments={this.props.article.comments}/>
+                <CommnetList comments={this.props.article.comments} articleId={this.props.article.id}/>
             </div>
         )
     }
 }
 
+function createMapStateToProps() {
+    const commentSelector = articleSelectorFactory()
+
+    return function mapStateToProps(state, ownProps) {
+        return {
+            article: commentSelector(state, ownProps)
+        }
+    }
+}
+
 export default connect(null, { deleteArticle })(Article)
+// export default connect(createMapStateToProps, { deleteArticle })(Article)

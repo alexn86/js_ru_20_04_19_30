@@ -7,23 +7,24 @@ import {connect} from 'react-redux'
 import {filteredArticlesSelector} from '../selectors'
 
 class ArticleList extends Component {
-    componentDidMount() {
-        const ref = this.refs[this.props.articles[0].id]
-        console.log('---', ref, findDOMNode(ref))
-    }
+    // componentDidMount() {
+    //     const ref = this.refs[this.props.articles[0].id]
+    //     console.log('---', ref, findDOMNode(ref))
+    // }
 
 
     render() {
         const {articles, toggleOpenItem, isItemOpened} = this.props
         console.log('---', 'rerendering ArticleList')
 
-        const elements = articles.map(article => <li key={article.id}>
-            <Article article = {article}
-                     isOpen = {isItemOpened(article.id)}
-                     toggleOpen = {toggleOpenItem(article.id)}
-                     ref = {article.id}
+        const elements = Object.keys(articles).map(id => <li key={id}>
+            <Article article = {articles[id]}
+                     isOpen = {isItemOpened(id)}
+                     toggleOpen = {toggleOpenItem(id)}
+                     ref = {id}
             />
-        </li>)
+        </li>);
+
         return (
             <ul ref={this.getContainerRef}>
                 {elements}
@@ -37,7 +38,7 @@ class ArticleList extends Component {
 }
 
 ArticleList.propTypes = {
-    articles: PropTypes.array,
+    articles: PropTypes.object,
     //from accordion decorator
     toggleOpenItem: PropTypes.func.isRequired,
     isItemOpened: PropTypes.func.isRequired
