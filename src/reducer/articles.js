@@ -16,6 +16,7 @@ export default (articles = articleMap, action) => {
         case ADD_COMMENT:
             articles = {...articles};
             console.log(articles, payload.articleId, articles[payload.articleId]);
+            //обрати внимание, comments - обычный массив, значит ты мутируеш стейт
             articles[payload.articleId].comments.push(payload.id);
             return articles
     }
