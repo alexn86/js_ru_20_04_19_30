@@ -23,9 +23,9 @@ class Article extends Component {
         console.log('---', 'mounting')
     }
 */
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     return nextProps.isOpen != this.props.isOpen
-    // }
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps.isOpen != this.props.isOpen || nextProps.commentsCount !== this.props.commentsCount
+    }
 
     componentWillUpdate() {
         console.log('---', 'updating')
@@ -70,8 +70,10 @@ function createMapStateToProps() {
     const articleSelector = articleSelectorFactory()
 
     return function mapStateToProps(state, ownProps) {
+        const article = articleSelector(state, ownProps);
         return {
-            article: articleSelector(state, ownProps)
+            article: article,
+            commentsCount: article.comments.length
         }
     }
 }
