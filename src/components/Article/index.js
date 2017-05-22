@@ -18,15 +18,14 @@ class Article extends Component {
         isOpen: PropTypes.bool,
         toggleOpen: PropTypes.func
     }
-
 /*
     componentWillMount() {
         console.log('---', 'mounting')
     }
 */
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.isOpen != this.props.isOpen
-    }
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return nextProps.isOpen != this.props.isOpen
+    // }
 
     componentWillUpdate() {
         console.log('---', 'updating')
@@ -68,14 +67,14 @@ class Article extends Component {
 }
 
 function createMapStateToProps() {
-    const commentSelector = articleSelectorFactory()
+    const articleSelector = articleSelectorFactory()
 
     return function mapStateToProps(state, ownProps) {
         return {
-            article: commentSelector(state, ownProps)
+            article: articleSelector(state, ownProps)
         }
     }
 }
 
-export default connect(null, { deleteArticle })(Article)
-// export default connect(createMapStateToProps, { deleteArticle })(Article)
+// export default connect(null, { deleteArticle })(Article)
+export default connect(createMapStateToProps, { deleteArticle })(Article)

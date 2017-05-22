@@ -3,8 +3,6 @@ import Comment from './Comment'
 import CommentForm from './CommentForm/index'
 import toggleOpen from '../decorators/toggleOpen'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import {filteredCommentsSelector} from '../selectors'
 
 function CommentList(props) {
     const {isOpen, toggleOpen} = props
@@ -39,12 +37,4 @@ CommentList.propTypes = {
     comments: PropTypes.array
 }
 
-function mapStateToProps(storeState, ownProps) {
-    return {
-        comments: filteredCommentsSelector(storeState, ownProps)
-        // comments: storeState.articles[ownProps.articleId].comments
-    }
-}
-
-// export default toggleOpen(CommentList)
-export default connect(mapStateToProps)(toggleOpen(CommentList))
+export default toggleOpen(CommentList)

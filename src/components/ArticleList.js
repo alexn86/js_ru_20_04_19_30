@@ -18,7 +18,7 @@ class ArticleList extends Component {
         console.log('---', 'rerendering ArticleList')
 
         const elements = Object.keys(articles).map(id => <li key={id}>
-            <Article article = {articles[id]}
+            <Article id = {id}
                      isOpen = {isItemOpened(id)}
                      toggleOpen = {toggleOpenItem(id)}
                      ref = {id}
