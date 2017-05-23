@@ -17,15 +17,15 @@ function CommentList(props) {
 }
 
 function getBody(props) {
-    const {comments = [], isOpen} = props
+    const {article: { id, comments = [] }, isOpen} = props
     if (!isOpen) return null
-    if (!comments.length) return <div><p>No comments yet</p><CommentForm/></div>
+    if (!comments.length) return <div><p>No comments yet</p><CommentForm articleId = {id}/></div>
     return (
         <div>
             <ul>
                 {comments.map(id => <li key={id}><Comment id={id}/></li>)}
             </ul>
-            <CommentForm />
+            <CommentForm articleId = {id} />
         </div>
     )
 }
@@ -33,7 +33,7 @@ function getBody(props) {
 CommentList.propTypes = {
     isOpen: PropTypes.bool,
     toggleOpen: PropTypes.func,
-    comments: PropTypes.array
+    article: PropTypes.object
 }
 
 export default toggleOpen(CommentList)

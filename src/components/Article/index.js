@@ -2,9 +2,10 @@ import React, {Component} from 'react'
 import CommnetList from '../CommentList'
 import PropTypes from 'prop-types'
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+import Loader from '../Loader'
 import './style.css'
 import {connect} from 'react-redux'
-import {deleteArticle} from '../../AC/index'
+import {deleteArticle, loadArticle} from '../../AC/index'
 
 class Article extends Component {
     static propTypes = {
@@ -18,14 +19,15 @@ class Article extends Component {
         toggleOpen: PropTypes.func
     }
 
+    componentWillReceiveProps({article, loadArticle, isOpen}) {
+        if (isOpen && !this.props.isOpen) loadArticle(article.id)
+    }
+
 /*
     componentWillMount() {
         console.log('---', 'mounting')
     }
 */
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.isOpen != this.props.isOpen
-    }
 
     componentWillUpdate() {
         console.log('---', 'updating')
@@ -57,13 +59,16 @@ class Article extends Component {
     }
 
     getBody() {
-        return this.props.isOpen && (
+        const {isOpen, article} = this.props
+        if (!isOpen) return null
+        if (article.loading) return <Loader />
+        return (
             <div>
                 {this.props.article.text}
-                <CommnetList comments={this.props.article.comments}/>
+                <CommnetList article = {this.props.article}/>
             </div>
         )
     }
 }
 
-export default connect(null, { deleteArticle })(Article)
+export default connect(null, { deleteArticle, loadArticle })(Article)

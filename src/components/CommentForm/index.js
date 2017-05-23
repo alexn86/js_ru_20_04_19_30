@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import {addComment} from  '../../AC'
 import './style.css'
 
 class CommentForm extends Component {
@@ -9,7 +11,7 @@ class CommentForm extends Component {
 
     state = {
         user: '',
-        comment: ''
+        text: ''
     }
 
     render() {
@@ -18,9 +20,9 @@ class CommentForm extends Component {
                 user: <input value = {this.state.user}
                              onChange = {this.handleChange('user')}
                              className = {this.getClassName('user')} />
-                comment: <input value = {this.state.comment}
-                                onChange = {this.handleChange('comment')}
-                                className = {this.getClassName('comment')} />
+                comment: <input value = {this.state.text}
+                                onChange = {this.handleChange('text')}
+                                className = {this.getClassName('text')} />
                 <input type = "submit" value = "submit"/>
             </form>
         )
@@ -28,10 +30,11 @@ class CommentForm extends Component {
 
     handleSubmit = ev => {
         ev.preventDefault()
-        console.log('---', this.state)
+        const { addComment, articleId } = this.props
+        addComment(this.state, articleId)
         this.setState({
             user: '',
-            comment: ''
+            text: ''
         })
     }
 
@@ -46,4 +49,4 @@ class CommentForm extends Component {
     }
 }
 
-export default CommentForm
+export default connect(null, {addComment})(CommentForm)
