@@ -11,6 +11,7 @@ const ArticleModel = Record({
     loading: false
 })
 
+
 const DefaultReducerState = Record({
     entities: new OrderedMap({}),
     loading: false,
