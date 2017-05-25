@@ -15,6 +15,7 @@ const CommentModel = Record({
 
 // export default (comments = arrayToMap(defaultComments), action) => {
 // export default (comments = DefaultReducerState(), action) => {
+//давай комменты хранить в такой же структуре, как и статьи. Иначе быстро запутаешься
 export default (comments = new OrderedMap({}), action) => {
     const {type, payload, response, randomId} = action
     switch (type) {
