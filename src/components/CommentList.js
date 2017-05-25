@@ -9,7 +9,7 @@ import Loader from './Loader'
 import {checkLoadingComments} from '../selectors'
 
 class CommentList extends Component {
-
+    //хранить это в стейте компонента - не лучшая идея
     state = {
         loading: false
     }
