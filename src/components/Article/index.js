@@ -6,11 +6,13 @@ import Loader from '../Loader'
 import './style.css'
 import {connect} from 'react-redux'
 import {deleteArticle, loadArticle} from '../../AC/index'
+import LocalizedText from '../LocalizedText'
 
 class Article extends Component {
     static propTypes = {
+        id: PropTypes.string.isRequired,
         article: PropTypes.shape({
-            title: PropTypes.string.isRequired,
+            title: PropTypes.string,
             text: PropTypes.string,
             comments: PropTypes.array
         }),
@@ -19,28 +21,34 @@ class Article extends Component {
         toggleOpen: PropTypes.func
     }
 
-    componentWillReceiveProps({article, loadArticle, isOpen}) {
-        if (isOpen && !this.props.isOpen) loadArticle(article.id)
+    static contextTypes = {
+        user: PropTypes.string
     }
 
-/*
-    componentWillMount() {
-        console.log('---', 'mounting')
+    componentDidMount() {
+        this.checkAndLoad(this.props)
     }
-*/
 
-    componentWillUpdate() {
-        console.log('---', 'updating')
+    componentWillReceiveProps(nextProps) {
+        this.checkAndLoad(nextProps)
+    }
+
+    checkAndLoad({article, id, loadArticle}) {
+        if (!article || (!article.text && !article.loading)) loadArticle(id)
     }
 
     render() {
         const {article, toggleOpen} = this.props
+        if (!article) return null
         return (
             <section>
                 <h2 onClick={toggleOpen}>
                     {article.title}
                 </h2>
-                <a href = "#" onClick = {this.handleDelete}>delete me</a>
+                <h3>
+                    User: {this.context.user}
+                </h3>
+                <a href = "#" onClick = {this.handleDelete}><LocalizedText>delete me</LocalizedText></a>
                 <CSSTransitionGroup
                     transitionName = "article"
                     transitionEnterTimeout = {500}
@@ -71,4 +79,6 @@ class Article extends Component {
     }
 }
 
-export default connect(null, { deleteArticle, loadArticle })(Article)
+export default connect((state, {id}) => ({
+    article: state.articles.getIn(['entities', id])
+}), { deleteArticle, loadArticle }, null, {pure: false})(Article)

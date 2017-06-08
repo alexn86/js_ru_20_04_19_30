@@ -3,31 +3,54 @@ import Comment from './Comment'
 import CommentForm from './CommentForm/index'
 import toggleOpen from '../decorators/toggleOpen'
 import PropTypes from 'prop-types'
+import Loader from './Loader'
+import LocalizedText from './LocalizedText'
+import {loadArticlesComments} from '../AC'
+import {connect} from 'react-redux'
 
-function CommentList(props) {
-    const {isOpen, toggleOpen} = props
-    const linkText = isOpen ? 'hide comments' : 'show comments'
+class CommentList extends Component {
+    static contextTypes = {
+        store: PropTypes.object,
+        router: PropTypes.object
+    }
 
-    return (
-        <div>
-            <a href="#" onClick={toggleOpen}>{linkText}</a>
-            {getBody(props)}
+    componentWillReceiveProps({ article, isOpen, loadArticlesComments }) {
+        if (isOpen && !article.loadedComments && !article.loadingComments) loadArticlesComments(article.id)
+    }
+
+    render() {
+        console.log('---', 'context:', this.context)
+        const {isOpen, toggleOpen} = this.props
+        const linkText = isOpen ? 'hide comments' : 'show comments'
+
+        return (
+            <div>
+                <a href="#" onClick={toggleOpen}><LocalizedText>{linkText}</LocalizedText></a>
+                {this.getBody()}
+            </div>
+        )
+    }
+
+    getBody() {
+        const {article: { loadedComments, loadingComments, id, comments = [] }, isOpen} = this.props
+        if (!isOpen) return null
+        if (loadingComments) return <Loader/>
+        if (!loadedComments) return null
+
+        if (!comments.length) return <div>
+            <p><LocalizedText>No comments yet</LocalizedText></p>
+            <CommentForm articleId = {id}/>
         </div>
-    )
-}
 
-function getBody(props) {
-    const {article: { id, comments = [] }, isOpen} = props
-    if (!isOpen) return null
-    if (!comments.length) return <div><p>No comments yet</p><CommentForm articleId = {id}/></div>
-    return (
-        <div>
-            <ul>
-                {comments.map(id => <li key={id}><Comment id={id}/></li>)}
-            </ul>
-            <CommentForm articleId = {id} />
-        </div>
-    )
+        return (
+            <div>
+                <ul>
+                    {comments.map(id => <li key={id}><Comment id={id}/></li>)}
+                </ul>
+                <CommentForm articleId = {id} />
+            </div>
+        )
+    }
 }
 
 CommentList.propTypes = {
@@ -36,4 +59,4 @@ CommentList.propTypes = {
     article: PropTypes.object
 }
 
-export default toggleOpen(CommentList)
+export default connect(null, { loadArticlesComments }, null, {pure: false})(toggleOpen(CommentList))
