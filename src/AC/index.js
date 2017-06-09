@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import { INCREMENT, DELETE_ARTICLE, CHANGE_DATE_RANGE, CHANGE_SELECTION, ADD_COMMENT, LOAD_ALL_ARTICLES,
-    LOAD_ARTICLE, LOAD_ARTICLE_COMMENTS, START, SUCCESS, FAIL } from '../constants'
+    LOAD_ARTICLE, LOAD_ARTICLE_COMMENTS, LOAD_COMMENTS_FOR_PAGE, START, SUCCESS, FAIL } from '../constants'
 
 export function increment() {
     const action = {
@@ -71,5 +71,13 @@ export function loadArticle(id) {
                     payload: {error, id}
                 }))
         }, 1000)
+    }
+}
+
+export function loadCommentsForPage(page) {
+    return {
+        type: LOAD_COMMENTS_FOR_PAGE,
+        callAPI: `/api/comment?limit=5&offset=${(page - 1) * 5}`,
+        payload: {page}
     }
 }

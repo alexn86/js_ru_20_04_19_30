@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ArticlesPage from '../route_handlers/ArticlesPage'
+import CommentsPage from '../route_handlers/CommentsPage'
 import UserForm from './UserForm'
 import Filters from './Filters/index'
 import Counter from './Counter'
@@ -29,6 +30,7 @@ class App extends Component {
                         <Route path = '/filters' component = {Filters} />
                         <Route path = '/articles/new' render = {this.getSomeArticleText} />
                         <Route path = '/articles' component = {ArticlesPage} />
+                        <Route path='/comments/:page' component={CommentsPage} />
                     </Switch>
                 </div>
             </Router>
