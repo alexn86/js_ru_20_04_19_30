@@ -10,6 +10,8 @@ import NotFoundPage from '../route_handlers/NotFoundPage'
 import {Redirect, Route, NavLink, Switch} from 'react-router-dom'
 import {ConnectedRouter as Router} from 'react-router-redux'
 import history from '../history'
+import {en, ru} from '../dictionaries'
+import LanguagePicker from './LanguagePicker'
 
 class App extends Component {
     static propTypes = {
@@ -20,12 +22,15 @@ class App extends Component {
     }
 
     static childContextTypes = {
-        user: PropTypes.string
+        user: PropTypes.string,
+        en: PropTypes.object,
+        ru: PropTypes.object
     }
 
     getChildContext() {
         return {
-            user: this.state.username
+            user: this.state.username,
+            en, ru
         }
     }
 
@@ -35,6 +40,7 @@ class App extends Component {
         return (
             <Router history = {history}>
                 <div>
+                    <LanguagePicker/>
                     <UserForm value = {this.state.username} onChange = {this.handleUserChange} />
                     <ul>
                         <li><NavLink to = '/counter' activeStyle = {{color: 'red'}}>Counter</NavLink></li>

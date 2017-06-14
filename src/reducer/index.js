@@ -5,9 +5,11 @@ import articles from './articles'
 import comments from './comments'
 import filters from './filters'
 import error from './error'
+import language from './language'
 
 export default combineReducers({
     counter: counterReducer,
     articles, comments, filters, error,
-    router: routerReducer
+    router: routerReducer,
+    language
 })

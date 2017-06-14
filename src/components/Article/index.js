@@ -21,7 +21,9 @@ class Article extends Component {
     }
 
     static contextTypes = {
-        user: PropTypes.string
+        user: PropTypes.string,
+        en: PropTypes.object,
+        ru: PropTypes.object
     }
 
     componentDidMount() {
@@ -37,7 +39,7 @@ class Article extends Component {
     }
 
     render() {
-        const {article, toggleOpen} = this.props
+        const {article, toggleOpen, language} = this.props
         if (!article) return null
         return (
             <section>
@@ -47,7 +49,7 @@ class Article extends Component {
                 <h3>
                     User: {this.context.user}
                 </h3>
-                <a href = "#" onClick = {this.handleDelete}>delete me</a>
+                <a href = "#" onClick = {this.handleDelete}>{this.context[language]['delete me']}</a>
                 <CSSTransitionGroup
                     transitionName = "article"
                     transitionEnterTimeout = {500}
@@ -79,5 +81,6 @@ class Article extends Component {
 }
 
 export default connect((state, {id}) => ({
-    article: state.articles.getIn(['entities', id])
+    article: state.articles.getIn(['entities', id]),
+    language: state.language
 }), { deleteArticle, loadArticle }, null, {pure: false})(Article)
